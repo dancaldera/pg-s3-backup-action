@@ -1,0 +1,19 @@
+{
+  "name": "postgresql-backups",
+  "version": "1.0.0",
+  "description": "automated-postgresql-backups-with-nodejs-and-bash",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Daniel Caldera",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "^1.2.5",
+    "@getvim/execute": "^1.0.0",
+    "aws-sdk": "^2.1165.0",
+    "gzipme": "^1.0.0",
+    "uuid": "^8.3.2"
+  }
+}
