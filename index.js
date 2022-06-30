@@ -4,29 +4,29 @@ const fs = require('fs')
 const S3 = require('aws-sdk/clients/s3')
 const core = require('@actions/core')
 
-const user = core.getInput('DB_USER', {
+const user = core.getInput('db_user', {
   required: true
 })
-const name = core.getInput('DB_NAME', {
+const name = core.getInput('db_name', {
   required: true
 })
-const host = core.getInput('DB_HOST', {
+const host = core.getInput('db_host', {
   required: true
 })
-const port = core.getInput('DB_PORT', {
+const port = core.getInput('db_port', {
   required: true
 })
-const pass = core.getInput('DB_PASS', {
+const pass = core.getInput('db_pass', {
   required: true
 })
 
-const Bucket = core.getInput('BUCKET', {
+const Bucket = core.getInput('aws_bucket', {
   required: true
 })
 
 const s3 = new S3({
-  accessKeyId: core.getInput('ACCESS_KEY_ID'),
-  secretAccessKey: core.getInput('SECRET_ACCESS_KEY')
+  accessKeyId: core.getInput('aws_key_id'),
+  secretAccessKey: core.getInput('aws_secret_access_key')
 })
 
 var currentDate, backupFile, backupFileGz

@@ -1,0 +1,31 @@
+name: pg-s3-backup-action
+description: 'Upload a backup of postgres on s3'
+author: 'Daniel Caldera'
+inputs:
+  aws_key_id:
+    description: 'aws key id'
+    required: true
+  aws_secret_access_key:
+    description: 'aws secret access key'
+    required: true
+  aws_bucket:
+    description: 'aws bucket name'
+    required: true
+  db_user:
+    description: 'postgres db user'
+    required: true
+  db_name:
+    description: 'postgres db name'
+    required: true
+  db_host:
+    description: 'postgres db host'
+    required: true
+  db_port:
+    description: 'postgres db port'
+    required: true
+  db_pass:
+    description: 'postgres db password'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'
