@@ -19,12 +19,9 @@ const port = core.getInput('db_port', {
 const pass = core.getInput('db_pass', {
   required: true
 })
-
 const Bucket = core.getInput('aws_bucket', {
   required: true
 })
-
-console.log(core.getInput('db_port'))
 
 const s3 = new S3({
   accessKeyId: core.getInput('aws_key_id'),
