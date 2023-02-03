@@ -26,6 +26,10 @@ inputs:
   db_pass:
     description: 'postgres db password'
     required: true
+  postgres_version:
+    description: 'postgres version'
+    required: false
+    default: '14'
 runs:
   using: 'node16'
   main: 'index.js'

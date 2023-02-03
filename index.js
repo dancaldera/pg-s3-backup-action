@@ -22,6 +22,9 @@ const pass = core.getInput('db_pass', {
 const Bucket = core.getInput('aws_bucket', {
   required: true
 })
+const postgresVersion = core.getInput('postgres_version', {
+  required: false
+})
 
 const s3 = new S3({
   accessKeyId: core.getInput('aws_key_id'),
@@ -35,7 +38,7 @@ currentDate = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}.${
 backupFile = `pg-backup-${currentDate}.tar`
 backupFileGz = `${backupFile}.gz`
 
-execute(`pg_dump 'postgres://${user}:${pass}@${host}:${port}/${name}' -f ${backupFile}`)
+execute(`/usr/lib/postgresql/${postgresVersion}/bin/pg_dump 'postgres://${user}:${pass}@${host}:${port}/${name}' -f ${backupFile}`)
   .then(async () => {
     await compress(backupFile)
     fs.unlinkSync(backupFile)
