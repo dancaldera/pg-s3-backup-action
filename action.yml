@@ -19,5 +19,5 @@ inputs:
     required: false
     default: "14"
 runs:
-  using: node20
+  using: bun1
   main: "index.ts"
