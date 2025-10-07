@@ -1,7 +1,7 @@
 const { execute } = require('@getvim/execute')
 const compress = require('gzipme')
 const fs = require('fs')
-const S3 = require('aws-sdk/clients/s3')
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3')
 const core = require('@actions/core')
 
 const user = core.getInput('db_user', {
@@ -26,9 +26,11 @@ const postgresVersion = core.getInput('postgres_version', {
   required: false
 })
 
-const s3 = new S3({
-  accessKeyId: core.getInput('aws_key_id'),
-  secretAccessKey: core.getInput('aws_secret_access_key')
+const s3Client = new S3Client({
+  credentials: {
+    accessKeyId: core.getInput('aws_key_id'),
+    secretAccessKey: core.getInput('aws_secret_access_key')
+  }
 })
 
 var currentDate, backupFile, backupFileGz
@@ -46,21 +48,19 @@ execute(`/usr/lib/postgresql/${postgresVersion}/bin/pg_dump 'postgres://${user}:
 
     const fileContent = fs.readFileSync(backupFileGz)
 
-    const params = {
+    const command = new PutObjectCommand({
       Bucket,
       Key: backupFileGz,
       Body: fileContent
-    }
-
-    s3.upload(params, function (err, data) {
-      if (err) {
-        console.log('Error', err)
-      }
-      if (data) {
-        fs.unlinkSync(backupFileGz)
-        console.log('Upload Success', data.Location)
-      }
     })
+
+    try {
+      const data = await s3Client.send(command)
+      fs.unlinkSync(backupFileGz)
+      console.log('Upload Success', `https://${Bucket}.s3.amazonaws.com/${backupFileGz}`)
+    } catch (err) {
+      console.log('Error', err)
+    }
   })
   .catch(err => {
     console.log(err)
