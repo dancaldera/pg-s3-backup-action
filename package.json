@@ -1,6 +1,6 @@
 {
   "name": "postgresql-backups",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "automated-postgresql-backups-with-nodejs-and-bash",
   "main": "index.js",
   "scripts": {
